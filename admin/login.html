@@ -64,14 +64,13 @@
             password : password,
           },
           success: function (b) {
-            console.log(b);
-            
             if (b.code == 400) {
               alert(b.msg);
             }
             else if (b.code == 200) {
               alert(b.msg);
               window.location.href = 'index.html';
+              window.localStorage.setItem('weiyi',b.token);
             }
             
           }

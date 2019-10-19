@@ -58,12 +58,38 @@
 </body>
 <script>
     $(function () {
+        //注册点击事件
         $('.level01').click(function () {
+            //level01的兄弟元素可以下拉
             $(this).siblings('.level02').slideToggle();
         })
-        $('.level01.eq(1)').click(function () {
-            
+        //设置高亮，排他思想。点击的当前标签添加高亮类名，其他的移除类名
+        $('.level01:eq(1)').click(function () {
             $(this).addClass('active').siblings().removeClass('active');
+        })
+        //这里就需要把储存到本地的那个值拿出来并添加到请求头内
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/admin/user/info',
+            type: 'get',
+            headers: {
+                Authorization : window.localStorage.getItem('weiyi')
+            },
+            success: function (mag) {
+                console.log(mag);
+                
+                $('.user_info>img').attr("src",mag.data.userPic),
+                $('.user_info>span').text(`欢迎：  ${mag.data.nickname}`),
+                $('.user_center_link>img').attr("src",mag.data.userPic);
+                
+            },
+            error:function (out) {
+                console.log(out);
+                if (out.statusText == "Forbidden") {
+                    alert('系统检测到您未登录，请先登陆再来看看吧'),
+                    window.location.href ='login.html';
+                }
+            }
+
         })
     })
 </script>
