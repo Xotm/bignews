@@ -60,16 +60,16 @@
     $(function () {
         //注册点击事件
         $('.level01').click(function () {
-            //level01的兄弟元素可以下拉
+            //设置高亮，排他思想。点击的当前标签添加高亮类名，其他的移除类名
             $(this).addClass('active').siblings().removeClass('active');
+            //level01的兄弟元素可以下拉
         })
-        //设置高亮，排他思想。点击的当前标签添加高亮类名，其他的移除类名
         $('.level01:eq(1)').click(function () {
             $(this).siblings('.level02').slideToggle();
         })
         //这里就需要把储存到本地的那个值拿出来并添加到请求头内
         $.ajax({
-            url: 'http://localhost:8080/api/v1/admin/user/info',
+            url: urls.user_info,
             type: 'get',
             // headers: {
             //     Authorization : window.localStorage.getItem('token')
