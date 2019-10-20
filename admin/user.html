@@ -70,11 +70,31 @@
     </div>
 </body>
 <script>
-    //调用用户详情的接口
-     $.ajax({
-        url: '',
-        //默认获取类型就是get，所以如果获取类型是get的话可以省略
-     })
-
+    //jquery的入口函数
+    $(function () {
+        //调用用户详情的接口
+        $.ajax({
+            url: urls.user_detail,
+            //默认获取类型就是get，所以如果获取类型是get的话可以省略
+            success: function (backserver) {
+                console.log(backserver);
+                
+                //获取页面中用户名称输入框中的值将其更改为服务器返回的name值,这个方法比较不方便，这里可以用到for in对象遍历
+                // $('.username').val(backserver.data.username),
+                // $('.nickname').val(backserver.data.nickname),
+                // $('.email').val(backserver.data.email),
+                // $('.password').val(backserver.data.password);
+                //for in 对象的循环遍历，backserver.data是要遍历的对象。key是一个变量，是用来接收遍历出backserver.data中的每一项，
+                for (key in backserver.data) {
+                    console.log(backserver.data[key]);
+                    //key就是
+                    $('.' + key).val(backserver.data[key]);
+                };
+                //因为图片地址的设置方式与其他的不同，所以要单独设置。设置图片src属性要通过attr
+                $('.user_pic').attr('scr',backserver.data.userPic);
+            }
+        })
+        
+    })
 </script>
 </html>
